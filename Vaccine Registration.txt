@@ -1,0 +1,217 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+int AdminId=13456; 
+int PassWord=1234; 
+
+struct form{
+    char name[20];
+    int age;
+    int vacctaken;    
+    int phnum;
+    int userid;
+    int password;
+};
+
+int main(){
+    int list=0;
+    char num_str[10];
+    int number,person=0,admin_id,login,booking_limit,covishield=0,choice,choice1,userid,user_id,revisit;
+    struct form reg[1000];
+    int pass_word,pass_word_user;
+    do{
+    printf("\n\n\t\tWant to login as Admin or a User?\n\t\tType 1 for ADMIN & 2 for USER\n");
+    scanf("%d",&login);
+    switch(login){
+        case 1: printf("\t\t***********************************\n");
+                printf("\t\t  VACCINE REGISTRATION ADMIN PAGE\n");
+                printf("\t\t************************************\n\n");
+                printf("Welcome Back! Please enter your Admin Id\n"); 
+                scanf("%d",&admin_id);
+                printf("Please enter your Password\n");
+                scanf("%d",&pass_word);
+                if(admin_id==AdminId && pass_word==PassWord){            
+                    printf("Today's booking limit for covishield:\n"); 
+                    scanf("%d",&covishield);
+                    
+                int list_users=0;
+                printf("\tNames of the registered people:\n");
+                int list=person;
+                if(list)
+                { 
+                    while(list){
+                        printf("\t%s\n",reg[list_users].name);
+                        list_users++; 
+                        list--;                                                     //while conditi
+                    }     
+                }
+                }
+                else
+                printf("Please enter proper data\n\n\n");
+                
+                break;
+        
+        case 2: {
+           // do{
+                printf("\t\t***********************************\n");
+                printf("\t\t  VACCINE REGISTRATION FORM\n");
+                printf("\t\t************************************\n\n");
+                printf("Welcome! Choose the following:\n");
+                printf("1.New Registration for age group\n2.Book a date for vaccine\n3.See the status\n4.Exit\n");
+                scanf("%d",&choice);
+                
+                    switch(choice){
+                        case 1:         
+                                                
+                                                printf("Enter your name\n");
+                                                scanf("%s",reg[person].name);            //name gets
+                                                printf("Enter your age\n");
+                                                scanf("%d",&reg[person].age);
+                                                printf("Enter your phone number\n");
+                                                scanf("%d",&reg[person].phnum);
+                                                    sprintf(num_str,"%d",reg[person].phnum);
+                                                    number=strlen(num_str);
+                                                printf("Set your password\n");
+                                                printf("NOTE:The password must be s strong one!\n");
+                                                scanf("%d",&reg[person].password);
+                                                //validation
+                                                reg[person].vacctaken=0;
+                                                  
+                                                reg[person].userid=person;
+                                                printf("\tUser Id=%d\n",reg[person].userid);
+                                                person=person+1;
+                                               // printf("\tPassword = %d\n\n",reg[person].password);
+                                                                     
+                                                break;
+                                               
+                                
+                        case 2:
+                               printf("Want to book a slot?\nEnter your user id!\n");
+                                scanf("%d",&user_id);
+                               printf("Please enter your Password\n");
+                                scanf("%d",&pass_word_user);
+                                
+                                
+                               /* printf("user id entered = %d\n",user_id);
+                                printf("user Password entered = %d\n",pass_word_user);
+                                printf("user id stored = %d\n",reg[user_id].userid);
+                                printf("user password stored = %d\n",reg[user_id].password);
+                                
+                                */
+                                int flag=0;
+                                for(int i=0;i<person;i++)
+                                {
+                                            if((user_id==reg[i].userid) && (pass_word_user==reg[i].password)){                          //not working
+                                                if(covishield>0){                                          
+                                                printf("Congratulations!\nYour slot is Booked!\n");  
+                                            //    list++
+                                                --covishield;
+                                                reg[user_id].vacctaken++;
+                                            }
+                                        
+                                            else
+                                                printf("Sorry!Slot not available at this time.\nPlease try some other day\n");
+                                        
+                                                flag=1;
+                                            }
+                                }
+                                if (flag==0)
+                                printf("Wrong input credentials!\n Please try with a correct credentials\n");
+                                
+                                break;
+                                
+                        case 3:printf("Want to see your status of vaccine\n?");
+                                printf("Enter your User Id\n");
+                                scanf("%d",&user_id);
+                                printf("Please enter your Password\n");
+                                scanf("%d",&pass_word_user);
+                                
+                                flag=0;
+                                for(int i=0;i<person;i++)
+                                {
+                                 
+                                if(user_id==reg[i].userid && pass_word_user==reg[i].password){                 //not working
+                                        printf("User Id:%d\n",reg[user_id].userid);
+                                        printf("Name=%s\n",reg[user_id].name);
+                                        printf("Age=%d\n",reg[user_id].age);
+                                        printf("Number of vaccines taken=%d\n",reg[user_id].vacctaken);
+                                        printf("Phone Number=%d\n",reg[user_id].phnum);
+                                    
+                                    flag=1;
+                                    break;
+                                    }
+                                }
+                                if(flag==0)
+                                 printf("Wrong input credentials!\n Please try with a correct credentials\n");
+                                  break;
+                                    
+                                
+                                
+                        case 4:exit(0);
+                                break;
+                        
+                        default:printf("Not a valid choice\n");
+                    }        
+                    
+            //         int choice=0;
+            //         printf("do u want to remain in user's profile???\n ENTER 1 FOR YES\n ENTER 2 FOR NO\n");
+            //         scanf("%d",&choice);
+            // }while(choice==1);
+           // break;
+                
+        }
+        
+   // }while(1);                                       //not working
+    
+    }   
+    }while(1);
+                return 0;
+                
+                
+    }
+    
+                
+                
+    /*        for(int i=0;i<strlen(reg[person].name);i++){
+               if((reg[person].name[i]<91 && reg[person].name[i]>64) || (reg[person].name[i]>96 && reg[person].name[i]<123))
+               continue;
+               else
+               printf("Please enter proper input\n");
+               break;
+            }     
+           
+            if(reg[person].age<75 && reg[person].age>15)
+            continue;
+            else
+            printf("Please enter proper input\n");
+            break;
+           
+            if(number=10)
+            continue;
+            else
+            printf("Please enter proper input\n");
+            break;
+            
+            int c_cap=0,c_low=0,c_num=0,c_sym=0;
+            for(int c=0;c<strlen(reg[person].password);c++){
+                if(reg[person].password[c]>96 && reg[person].password[c]<123)
+                c_low++;
+                else if(reg[person].password[c]>64 && reg[person].password[c]<91)
+                c_cap++;
+                else if(reg[person].password[c]>47 && reg[person].password[c]<58)
+                c_num++;
+                else if(reg[person].password[c]>57 && reg[person].password[c]<65)
+                c_sym++;
+                else if(reg[person].password[c]>32 && reg[person].password[c]<48)
+                c_sym++;
+                else if(reg[person].password[c]>90 && reg[person].password[c]<97)
+                c_sym++;
+            }
+            if(c_cap>0 && c_low>0 && c_num>0 && c_sym>0)
+            continue;
+            else
+            printf("Please enter proper input\n");
+            break;*/
+
+

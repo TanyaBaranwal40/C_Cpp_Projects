@@ -1,0 +1,497 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class teacher //protected student
+{
+    private:
+        string name;
+        string gender;
+    	string qual;
+        string subject;
+    	string user_name;
+    	string password;
+	     
+    public:
+        void teacher_login();
+        void teacher_register();
+        void display();
+   
+    protected:
+       
+        void view_QA()
+        {
+            string q1,q2,q3,q4,q5;
+            string q_1,q_2,q_3,q_4,q_5;
+            FILE *fpM;
+            fpM = fopen("Maths_Paper.txt","r");                  //else no question paper exists
+            while((fscanf(fpM,"%s %s %s %s %s %s",&q_1,&q_2,&q_3,&q_4,&q_5))!=EOF)
+            {
+                cout<<"Mathematics Question Paper"<<endl;
+                cout<<"Q1: "<<q_1<<endl;
+                cout<<"Q2: "<<q_2<<endl;
+                cout<<"Q3: "<<q_3<<endl;
+                cout<<"Q4: "<<q_4<<endl;
+                cout<<"Q5: "<<q_5<<endl;
+            }
+            
+            fclose(fpM);
+        }
+        
+        void view_result();
+};
+
+
+
+
+
+void teacher::teacher_register()                               //  void class_name::function_name()......syntax
+    {  
+	    string name1,gender1,qual1,subject1,user_name1,password1;
+	    string name,gender,qual,subject,user_name,password;
+	    int a=0;
+	    FILE *fp;
+        cin>>this->name;                                     // this->(into the variable declared in class)
+        cout<<"\n\n\n\n\n\n\n\n\t\t\t\t*WELCOME TO XYZ COLLEGE"<<endl;
+        cout<<"\t\t**Register"<<endl;
+        cout<<"Enter Name: "<<endl;
+        getline(cin,name);
+        cout<<"Gender: "<<endl;
+        cin>>gender;
+        cout<<"Qualification: "<<endl;
+        getline(cin,qual);
+        cout<<"Subject of Teaching: "<<endl;
+        cin>>subject;
+        cout<<"Enter Username: "<<endl;
+        cin>>user_name;
+        cout<<"Password: "<<endl;
+        cin>>password;
+
+	fp=fopen("teacher_details.txt","w");  //(append+read) 
+        
+        while((fscanf(fp,"%s %s %s %s %s %s",&name1,&gender1,&qual1,&subject1,&user_name1,&password1))!=EOF)
+            {
+                if(user_name==user_name1)
+                    {
+                        a=1;
+                        break;
+                    }
+            }
+                        
+        if(a==1)
+            {
+                cout<<"\nUsername already taken..Try again with another name.."<<endl;
+            }
+        else{
+                fprintf(fp,"%s %s %s %s %s %s \n",name,gender,qual,subject,user_name,password); //stored in the file
+                cout<<"\n\nUser successfully registered"<<endl;
+            }
+ 
+    fclose(fp);
+    }
+    
+    
+    void teacher::display()
+    {
+        cout<<"Name Registered: "<<name<<endl;
+        cout<<"Gender: "<<gender<<endl;
+	    cout<<"Qualification: "<<qual<<endl;
+        cout<<"Subject Of Teaching: "<<subject<<endl;
+    	cout<<"Username: "<<user_name<<endl;
+    	cout<<"Password: ***** "<<endl;
+    	
+    }
+
+
+
+
+void teacher_login(){
+    char user_name[10],user_name1[10],gender[10],qual[10],name[10],password[10],password1[10],gender1[10],qual1[10],name1[10];
+    char subject[10],subject1[10];
+    FILE *fp;
+    int view;
+    string q1,q2,q3,q4,q5;
+    FILE *fpM;
+    
+   cout<<"\t\t**Login Page**"<<endl;
+    cout<<"Enter username"<<endl;
+    cin>>user_name;
+    cout<<"Password: "<<endl;
+    cin>>password;
+  
+    fp=fopen("teacher_details.txt","r");
+    int c=0,count=0;
+    
+    while((fscanf(fp,"%s %s %s %s %s %s",&name1,&gender1,&qual1,&subject1,&user_name1,&password1))!=EOF)
+        {
+
+            count++;
+            cout<<"Searching Entry: \n"<<count<<endl;
+            if((user_name==user_name1) && (password==password1))
+                {
+                    cout<<"\nUsername Now: "<<user_name1<<"\t\tPassword Now: "<<password1<<endl;
+                    cout<<"\n\nLogin Successful!!\n"<<endl;      //once data is found no more tally required loop needs to be stopped with flag
+                    c=1;
+  
+                    cout<<"Want to view profile?\nEnter 1\nWant to Set Question Paper?\nEnter any other digit"<<endl;
+                    cin>>view;
+                    if(view=1)
+                        {
+                            cout<<"Name: "<<name1<<endl;
+                            cout<<"Gender: "<<gender1<<endl;                             //view profile not visible
+                            cout<<"Qualification: "<<qual1<<endl;
+                            cout<<"Subject of Teaching: "<<subject1<<endl;
+                            cout<<"Username: "<<user_name1<<endl;
+                            cout<<"Password: ****"<<endl;
+   
+                        }
+                    else
+                        {
+                            cout<<"\n\n\t\tSet Question Paper"<<endl;                 //add subject to the profile 
+                            fpM = fopen("Maths_Paper.txt","w");
+                            cout<<"Enter first question: "<<endl;
+                            getline(cin,q1);
+                                    
+                            cout<<"Enter second question"<<endl;
+                            getline(cin,q2);
+                                    
+                            cout<<"Enter third question"<<endl;
+                            getline(cin,q3);
+                                    
+                            cout<<"Enter fourth question"<<endl;
+                            getline(cin,q4);
+                                    
+                            cout<<"Enter fifth question"<<endl;
+                            getline(cin,q5);
+                                    
+                            fprintf(fpM,"%s\n %s\n %s\n %s\n %s\n",q1,q2,q3,q4,q5);                  //stored in the file
+                            cout<<"Question Paper Set!"<<endl;
+                                    
+                            fclose(fpM);
+                        }
+
+                }
+        }   
+                        if(c!=1)
+                        {
+                            cout<<"Sorry Your Directory is UNAVAILABLE!!\nPlease try again with another USERNAME!!"<<endl;
+                        }
+                        
+                        fclose(fp);
+}
+
+    
+
+/*class student{
+    public:
+    
+        string name;
+        int roll;
+        int std;
+        char sec;
+        
+    protected:
+    
+        int login_Id;
+        int password;                    //cant we initialize here itself?
+        void add_details;                                          //define all the functions here?
+        void view_details;
+        void ans_QA;
+        struct exam paper[5];
+        
+}
+*/
+
+
+
+int main()
+{   
+    int n,n1;
+    cout<<"Enter 1 for Teacher\nEnter 2 for Student\n"<<endl;
+    cin>>n;
+    
+    switch(n)
+    {
+        case 1: 
+            cout<<"1. Register\n2.Login"<<endl;
+            cin>>n1;
+            
+            switch(n1)
+            {
+                case 1: 
+                    const int numtech=3;         // Number of teachers to store
+                    teacher teachers[numtech];   // Array of teacher objects
+                    string inputName;
+
+                    for(int i=0; i<numtech; ++i)
+                    {
+                        cout<<"\n\nEnter name for teacher: "<<i+1<<endl;
+                        cin>>inputName;
+                        teachers[i].teacher_register();
+                    }
+
+                    for(int i=0;i<numtech;++i)
+                    {
+                        cout<<"\n\nTeacher "<<i+1<<" Info: "<<endl;
+                        teachers[i].display();
+                        cout<<"-------------------"<<endl;
+                    }
+                    break;
+
+              /*  case 2: 
+                    teacher_login();
+                    break;*/
+            }
+            
+        case 2:
+            cout<<"HELLO"<<endl;
+            break;
+    }
+    
+    return 0;
+}
+
+/*
+#include <iostream>
+#include <string>
+using namespace std;
+
+class student
+{
+    private:
+        string name_s;
+        int age_s;
+        string gender_s;
+        string user_name_s;
+        string password_s;
+        
+        
+    public:
+        void student_register();
+        void display_s();
+        
+    protected:
+        void give_exam();
+        void view_result();
+        
+};
+
+void student::student_register()
+{
+    string name_s, age_s, gender_s, user_name_s, password_s;
+    string name1_s, age1_s, gender1_s, user_name1_s, password1_s;
+    int a=0;
+    FILE *stu;
+    cin>>this->name_s;
+    cout<<"\n\n\n\n\n\t\t\tWELCOME TO XYZ COLLEGE"<<endl;
+    cout<<"\t\t---------Register Page--------"<<endl;
+    cout<<"Enter Name: "<<endl;
+    cin>>name_s;
+    cout<<"Enter Age: "<<endl;
+    cin>>age_s;
+    cout<<"Gender: "<<endl;
+    cin>>gender_s;
+    cout<<"Enter Username: "<<endl;
+    cin>>user_name_s;
+    cout<<"Password: "<<endl;
+    cin>>password_s;
+    
+    stu=fopen("student_details.txt","w");
+    
+    
+        while((fscanf(stu,"%s %d %s %s %s %s",&name1_s,&age1_s,&gender1_s,&user_name1_s,&password1_s))!=EOF)
+            {
+                if(user_name_s==user_name1_s)
+                    {
+                        a=1;
+                        break;
+                    }
+            }
+                        
+        if(a==1)
+            {
+                cout<<"\nUsername already taken..Try again with another name.."<<endl;
+            }
+        else{
+                fprintf(stu,"%s %d %s %s %s %s \n",name_s,age_s,gender_s,user_name_s,password_s); //stored in the file
+                cout<<"\n\nUser successfully registered"<<endl;
+            }
+ 
+    fclose(stu);
+    
+}
+
+
+ 
+    void student::display_s()
+    {
+    cout<<"Name Registered: "<<name_s<<endl;
+    cout<<"Age: "<<age_s<<endl;
+	cout<<"Gender: "<<gender_s<<endl;
+    cout<<"Username: "<<user_name_s<<endl;
+    cout<<"Password: ***** "<<endl;
+    	
+    }
+    
+    
+void student_login()
+{
+    string name_s, age_s, gender_s, user_name_s, password_s;
+    string name1_s, age1_s, gender1_s, user_name1_s, password1_s;
+    FILE *stu;
+    int c=0;
+    
+    cout<<"\t\t****LOGIN PAGE****"<<endl;
+    cout<<"Enter Username: "<<endl;
+    cin>>user_name_s;
+    cout<<"Password: "<<endl;
+    cin>>password_s;
+    
+    stu=fopen("student_details.txt","r");
+    int count=0;
+    
+    while((fscanf(stu,"%s %s %s %s %s",&name1_s,&age1_s,&gender1_s,&user_name1_s,&password1_s))!=EOF)
+    {
+            
+            count++;
+            cout<<"Searching Entry: \n"<<count<<endl;
+            if((user_name_s==user_name1_s) && (password_s==password1_s))
+            {
+                cout<<"\nUsername Now: "<<user_name1_s<<"\t\tPassword Now: *****"<<endl;
+                cout<<"\n\nLogin Successful!!\n"<<endl;
+                c=1;
+            }
+    }
+    
+    if(c=1)
+    {
+        cout<<"Name Registered: "<<name1_s<<endl;
+        cout<<"Age: "<<age1_s<<endl;
+    	cout<<"Gender: "<<gender1_s<<endl;
+        cout<<"Username: "<<user_name1_s<<endl;
+        cout<<"Password: ***** "<<endl;
+       
+    }
+    else
+        cout<<"Sorry! We could not find your directory.\n Try again with other username."<<endl;
+    
+    fclose(stu);
+}
+
+
+ void give_exam()
+ {
+    string name_s, age_s, gender_s, user_name_s, password_s;
+    string name1_s, age1_s, gender1_s, user_name1_s, password1_s;
+    FILE *stu;
+    FILE *fpM; //should be the choice to choose subject 
+    FILE *ans;
+    string a1,a2,a3,a4,a5;   //user input
+    string a_1,a_2,a_3,a_4,a_5;
+    int c=0;
+    
+    cout<<"\t\t****LOGIN PAGE****"<<endl;
+    cout<<"Enter Username: "<<endl;
+    cin>>user_name_s;
+    cout<<"Password: "<<endl;
+    cin>>password_s;
+    
+    stu=fopen("student_details.txt","r");
+    int count=0;
+    
+    while((fscanf(stu,"%s %s %s %s %s",&name1_s,&age1_s,&gender1_s,&user_name1_s,&password1_s))!=EOF)
+    {
+            
+            count++;
+            cout<<"Searching Entry: \n"<<count<<endl;
+            if((user_name_s==user_name1_s) && (password_s==password1_s))
+            {
+                cout<<"\nUsername Now: "<<user_name1_s<<"\t\tPassword Now: *****"<<endl;
+                cout<<"\n\nLogin Successful!!\n"<<endl;
+                c=1;
+            }
+
+    }
+    
+    if(c=1)
+    {
+        fpM=fopen("Maths_Paper.txt","r");
+        ans=fopen("Answer_Maths_Paper.txt","w");
+        
+        while((fscanf(fpM,"%s %s %s %s %s",&q_1,&q_2,&q_3,&q_4,&q_5))!=EOF)
+        {
+            cout<<"Mathematics Answer Paper"<<endl;
+            cout<<"Q1: "<<q_1<<endl;
+            getline(cin,a1);
+            cout<<"\n"<<endl;
+            
+            cout<<"Q2: "<<q_2<<endl;
+            getline(cin,a2);
+            cout<<"\n"<<endl;
+            
+            cout<<"Q3: "<<q_3<<endl;
+            getline(cin,a3);
+            cout<<"\n"<<endl;
+            
+            cout<<"Q4: "<<q_4<<endl;
+            getline(cin,a4);
+            cout<<"\n"<<endl;
+            
+            cout<<"Q5: "<<q_5<<endl;
+            getline(cin,a5);
+            cout<<"\n"<<endl;
+        }
+        
+        fprintf(ans,"%s\n %s\n %s\n %s\n %s\n",a1,a2,q3,q4,q5);
+        cout<<"Yours Answers have been stored!"<<endl;
+        
+        fclose(ans);
+        fclose(fpM);
+    }
+    
+    else
+        cout<<"Your Directory is Unavailable with this user name!!\nTry with another Username"<<endl;
+    
+ }
+ 
+ 
+
+int main(){
+ 
+ int n2;
+ cout<<"1. Register\n2.Login & View Details\n3.Give Exam"<<endl;
+                cin>>n2;
+                
+                switch(n2)
+                {
+                    case 1: const int numstud=3;    //Number of students to stored
+                            student students[numstud];
+                            string inputName_S;
+                            
+                            for(int i=0; i<numstud; ++i)
+                            {
+                                cout<<"\n\nEnter Name for student: "<<i+1<<endl;
+                                cin>>inputName_S;
+                                students[i].student_register();
+                            }
+                            
+                            for(int i=0; i<numstud; ++i)
+                            {
+                                cout<<"\n\nStudent "<<i+1<<" Info: "<<endl;
+                                students[i].display_s();
+                                cout<<"-------------------"<<endl;
+                            }
+                            
+                            break;
+                        
+                    case 2: student_login();
+                            break;
+                            
+                    case 3: give_exam();
+                            break;
+                }
+                
+return 0;
+}
+
+*/
