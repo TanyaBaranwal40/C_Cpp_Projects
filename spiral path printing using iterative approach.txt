@@ -1,0 +1,57 @@
+#include <stdio.h>
+#define R 6
+#define C 6
+
+int main()
+{
+    int arr[R][C];
+    printf("Enter the matrix elements\n");
+    for (int m = 0; m < R; m++)
+    {
+        for (int n = 0; n < C; n++)
+        {
+            scanf("%d", &arr[m][n]);
+        }
+    }
+
+    for (int m = 0; m < R; m++)
+    {
+        for (int n = 0; n < C; n++)
+        {
+            printf("%d ", arr[m][n]);
+        }
+        printf("\n");
+    }
+
+    int i = 0, j = 0;
+    int m = R, n = C;
+
+    while (i < m && j < n)
+    {
+        for (int p = j; p < n; p++)
+            printf("%d ", arr[i][p]);
+
+        i++;
+
+        for (int p = i; p < m; p++)
+            printf("%d ", arr[p][n - 1]);
+
+        n--;
+
+        if (i < m)
+        {
+            for (int p = n - 1; p >= j; p--)
+                printf("%d ", arr[m - 1][p]);
+            m--;
+        }
+
+        if (j < n)
+        {
+            for (int p = m - 1; p >= i; p--)
+                printf("%d ", arr[p][j]);
+            j++;
+        }
+    }
+
+    return 0;
+}
